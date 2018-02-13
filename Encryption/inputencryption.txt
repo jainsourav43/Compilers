@@ -1,0 +1,11 @@
+lexical
+calculator
+parser
+PParsf
+syntax
+AAvvUUbbUUUUn
+encryption
+programming
+exadecimal
+bootstrapping
+digits
