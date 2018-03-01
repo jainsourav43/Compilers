@@ -1,0 +1,17 @@
+4
+S aSSbS
+S aSaSb
+S abb
+S b
+S
+
+
+
+6
+E E+T
+E T
+T T*F
+T F
+F (E)
+F i
+E
