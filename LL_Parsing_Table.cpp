@@ -8,6 +8,14 @@ map<string,set<char> >first;
 map<string,set<char > >follow; 
 int check=0;
 map< pair<string,char > , pair<string,string> > table; 
+void printstack(stack<string>s)
+{
+	while(!s.empty())
+	{
+		cout<<s.top();
+		s.pop();
+	}
+}
 void print()//printing  the first
 {
 	cout<<"Printing---------------------------"<<endl;
@@ -508,6 +516,81 @@ int main()
 	}
 	cout<<"LL Parsing Table \n";
 	createTable();
+	cout<<"Enter the Input to Parse\n";
+	string input;
+	cin>>input;
+	input=input+'$';
+	string dollar="$";
+	stack<string> s;
+	s.push(dollar);
+	s.push(startVariable);
+	int cur=0;
+	vector<string> variables;
+	string temp,str="",topofstack,matched="";
+	i=0;
+	int ch=0;
+	cout<<endl<<endl;
+	cout<<"Matched\t\t"<<"Stack\t\t"<<"Input\t\t"<<"Action"<<endl;
+	while(!(s.top()==dollar&&input[cur]=='$'))
+	{
+		topofstack = s.top();
+		cout<<matched<<"\t\t";
+		printstack(s);cout<<"\t\t";
+		cout<<input.substr(cur,input.length()-cur)<<"\t\t";
+		if(topofstack[0]>=65&&topofstack[0]<=91)
+		{
+			cout<<"output "<<table[make_pair(s.top(),input[cur])].first<<"->"<<table[make_pair(s.top(),input[cur])].second<<endl;
+			variables.clear();
+			temp =table[make_pair(s.top(),input[cur])].second;
+			i=0;
+			while(i<temp.length())
+			{
+				str=temp[i];
+				i++;
+				while(temp[i]=='\'')
+				{
+					str=str+temp[i];
+					i++;
+				}
+
+				if(str!="e")
+				variables.push_back(str);
+			}
+			s.pop();
+			i=variables.size()-1;
+			while(i>=0)
+			{
+				s.push(variables[i]);
+				i--;
+			}		
+			
+		}
+		else
+		{
+			
+			if(topofstack[0]==input[cur])
+			{
+				cout<<"Matched "<<input[cur]<<endl;
+				matched =matched+topofstack[0];
+				cur++;
+				s.pop();
+			}
+			else
+			{
+				cout<<"Error\n";
+				return 0;
+			}
+			
+			
+		}
+		
+	}
+		cout<<matched<<"\t\t";
+		printstack(s);cout<<"\t\t";
+		cout<<input.substr(cur,input.length()-cur)<<"\n";
+	
+	
+	
 	return 0;
 	
 }
