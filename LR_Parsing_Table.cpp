@@ -2,6 +2,7 @@
 using namespace std;
 map<string,vector<string> > rules,newrules;
 string startVariable;
+map<int,vector< pair<string,string> > > table; 
 struct itemset 
 {
 	set < pair < pair <string,string >,bool > > items;
@@ -16,9 +17,10 @@ void displayItemsets()
 {	
 	cout<<"________________________________________________________";
 	int i;
-	cout<<"Welcome to Display\n";
+	//cout<<"Welcome to Display\n";
 	for(i=0;i<itemsets.size();i++)
 	{	
+		cout<<"IsFinal= "<<itemsets[i].isFinal<<endl;
 		cout<<"ItemSet "<<itemsets[i].number<<endl<<endl;
 		set < pair < pair <string,string >,bool > > ::iterator it =itemsets[i].items.begin();
 		while(it != itemsets[i].items.end())
@@ -31,13 +33,34 @@ void displayItemsets()
 		cout<<"Gotos\n";
 		while(it1!=itemsets[i].gotoon.end())
 		{
-			cout<<"("<<it1->first<<" , "<<it1->second<<") "<<endl;
+			cout<<"("<<it1->first<<" , ";
+			char a=it1->first[0],b=it1->first[0];
+			if(!(a>=65&&b<=91))
+			{
+				if(itemsets[i].isFinal)//We have to make changes here to make sure that all the column of a particular row are getting filled
+				{
+				cout<<"r"<<it1->second<<") "<<endl;
+				string temp= "r"+to_string(it1->second);
+				table[i].push_back(make_pair(it1->first,temp));
+				}
+				else
+				{
+					cout<<"s"<<it1->second<<") "<<endl;
+					string temp= "s"+to_string(it1->second);
+					table[i].push_back(make_pair(it1->first,temp));
+				}
+			}
+			else
+			{
+			cout<<it1->second<<") "<<endl;
+			table[i].push_back(make_pair(it1->first,to_string(it1->second)));
+			}
 			it1++;
 		}
 		cout<<endl<<endl;
 		
 	}
-	cout<<"_______________________________________________________________ Bye\n";
+	//cout<<"_______________________________________________________________ Bye\n";
 }
 
 
@@ -408,6 +431,10 @@ void initialisegoto()
 			
 			
 		}
+		if(itemsets[i].gotoon.size()==0)
+		{
+			itemsets[i].isFinal=1;
+		}
 	}
 }
 
@@ -448,7 +475,6 @@ int main()
 	
 	
 	cout<<"********************************************\n\n\n";
-	//displayItemsets();
 	initialisegoto();
 	displayItemsets();
 
