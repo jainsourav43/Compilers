@@ -539,6 +539,11 @@ int main()
 		cout<<input.substr(cur,input.length()-cur)<<"\t\t";
 		if(topofstack[0]>=65&&topofstack[0]<=91)
 		{
+			if(table.find(make_pair(s.top(),input[cur]))==table.end())
+			{
+				cout<<"Error\n";
+				exit(0);
+			}
 			cout<<"output "<<table[make_pair(s.top(),input[cur])].first<<"->"<<table[make_pair(s.top(),input[cur])].second<<endl;
 			variables.clear();
 			temp =table[make_pair(s.top(),input[cur])].second;

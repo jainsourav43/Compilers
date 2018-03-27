@@ -26,7 +26,6 @@ int search(string pat, string txt)//finding variable on the right side of produc
 
     int M = pat.length();
     int N = txt.length();
- 
 
     for (int i = 0; i <= N - M; i++) {
         int j;
@@ -852,7 +851,9 @@ int main()
 	printTable();
 	findrule();
 	string input;
+		cout<<"********************************************\n\n\n";
 	cout<<"Enter the Input\n";
+		cout<<"********************************************\n\n\n";
 	cin>>input;
 	string dollar ="$";
 	input =input+"$";
@@ -883,7 +884,7 @@ int main()
 		if(actionOrGoto[0]=='r')
 		{
 			string topofString =s.top();	
-			cout<<"reduce";
+			cout<<"reduce ";
 			int state=0;
 			for(i=1;i<actionOrGoto.length();i++)
 			{
@@ -918,7 +919,7 @@ int main()
 		}
 		else if(actionOrGoto[0]=='s')
 		{
-			cout<<"shift";
+			cout<<"shift ";
 			string temp ="";
 			temp=temp+input[cur];
 			s.push(temp);
@@ -944,25 +945,6 @@ int main()
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }
