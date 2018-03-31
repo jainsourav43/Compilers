@@ -8,6 +8,7 @@ map<string,set<char > >follow;
 set<char> findfirst(string s);
 int numbering=0,ans;
 map<pair< string,string> ,int >enumeratedRules; 
+map<int,pair<string,string>  >enumeratedRulesReverse; 
 string afterDot(string);
 struct itemset 
 {
@@ -25,7 +26,6 @@ int search(string pat, string txt)//finding variable on the right side of produc
 
     int M = pat.length();
     int N = txt.length();
- 
 
     for (int i = 0; i <= N - M; i++) {
         int j;
@@ -495,31 +495,6 @@ bool allDoneNext(set<  pair< pair <string,string >,bool > > setOfItem )
 	} 
 	return true;
 }
-int findindex(set<  pair< pair <string,string >,bool > > setOfItem )
-{
-	set<  pair< pair <string,string >,bool > > :: iterator it1,it2 ;
-	for(int i=0;i<itemsets.size();i++)
-	{
-		it1 =setOfItem.begin();
-		it2=itemsets[i].items.begin();
-		while(it1!=setOfItem.end()&&it2!=itemsets[i].items.end())
-		{
-			if(!(it1->first.first==it2->first.first&&it1->first.second==it2->first.second))
-			{
-				break;
-			}
-			it1++;
-			it2++;
-		}
-		if(it1==setOfItem.end()&&it2==itemsets[i].items.end())
-		{
-			ans=itemsets[i].number;
-			return i;
-		}
-		
-	}
-	return 0;
-}
 string afterDot(string s)
 {
 	//cout<<"String in After Dot = "<<s<<endl;
@@ -789,71 +764,24 @@ void initialisegoto()
 	}
 }
 
-void initialisegoto1()
+pair<string ,string> findrule()
 {
-
-
-	map<string,vector< pair<string,string> > > data,data2;
-	
-	int i,j,k;
-	for(i=0;i<itemsets.size();i++)
+	map< pair<string,string>,int > :: iterator it= enumeratedRules.begin();
+	while(it!=enumeratedRules.end())
 	{
-		set < pair < pair <string,string >,bool > > ::iterator it =itemsets[i].items.begin();
-		data.clear();
-		while(it != itemsets[i].items.end())
-		{
-			string afterdot  =afterDot(it->first.second);
-			if(afterdot=="END")
-			{
-				itemsets[i].isFinal=1;
-			}
-			string beforedot  =beforeDot(it->first.second);
-			data[afterdot].push_back(make_pair(it->first.first,it->first.second));
-			it++;
-		}
-		
-		
-		for(j=0;j<itemsets.size();j++)
-		{
-			set < pair < pair <string,string >,bool > > ::iterator it1 =itemsets[j].items.begin();
-			while(it1!=itemsets[j].items.end())
-			{
-				string afterdot1  =afterDot(it1->first.second);
-				string beforedot1  =beforeDot(it1->first.second);
-				data2[beforedot1].push_back(make_pair(it1->first.first,it1->first.second));
-			}
-			
-			
-		}
-		map<string,vector< pair<string,string> > > :: iterator it3=data.begin(),it4=data2.begin();
-		while(it3!=data.end())
-		{
-			vector< pair<string,string> > :: iterator it5 =it3->second.begin();
-			while(it4!=data2.end())
-			{
-				vector< pair<string,string> > :: iterator it6 =it4->second.begin();
-				 
-				
-				it4++;
-			}
-			it3++;	
-		}
-		
-		
-		
-		
-		
-		
-		if(itemsets[i].gotoon.size()==0)
-		{
-			itemsets[i].isFinal=1;
-		}
+		enumeratedRulesReverse[it->second]=make_pair(it->first.first,it->first.second);
+		it++;
 	}
 }
-
-
-
-
+void printstack(stack<string>s)
+{
+	while(!s.empty())
+	{
+		cout<<s.top()<<" ";
+		s.pop();
+	}
+	cout<<"\t";
+}
 int main()
 {
 	int n;
@@ -919,6 +847,104 @@ int main()
 	cout<<"********************************************\n\n\n";
 	initialisegoto();
 	displayItemsets();//In this Function only The Table is Getting Created
+	table[1].push_back(make_pair("$","AC"));
 	printTable();
+	findrule();
+	string input;
+		cout<<"********************************************\n\n\n";
+	cout<<"Enter the Input\n";
+		cout<<"********************************************\n\n\n";
+	cin>>input;
+	string dollar ="$";
+	input =input+"$";
+	stack<string> s;
+	s.push(dollar);
+	s.push("0");
+	int cur=0;
+	string actionOrGoto;
+	cout<<"Stack\t\t\t"<<"Input\t\t\t"<<"Action\n";
+	while(1)
+	{
+		printstack(s);cout<<"\t\t\t";cout<<input.substr(cur,input.length()-cur)<<"\t\t\t";
+		
 
+		vector<pair <string,string> > :: iterator it = table[stoi(s.top())].begin();
+		
+		while(it!=table[stoi(s.top())].end())
+		{
+			if(it->first[0]==input[cur])
+			{	
+				actionOrGoto =it->second;
+				break;
+			}
+			it++;
+		}
+	
+
+		if(actionOrGoto[0]=='r')
+		{
+			string topofString =s.top();	
+			cout<<"reduce ";
+			int state=0;
+			for(i=1;i<actionOrGoto.length();i++)
+			{
+				state =state*10+(actionOrGoto[i]-'0');
+			}
+
+			pair<string ,string > p =enumeratedRulesReverse[state];
+			cout<<p.first<<"->"<<p.second.substr(0,p.second.length()-1)<<"\n";
+
+			for(i=0;i<2*(p.second.length()-1);i++)
+			{
+				s.pop();
+			}
+			int prevTopOfStack = stoi(s.top());
+			s.push(p.first);
+
+			vector<pair <string,string> > :: iterator it1 = table[prevTopOfStack].begin();
+			while(it1!=table[(prevTopOfStack)].end())
+			{
+				if(it1->first==s.top())
+				{	
+					s.push(it1->second);
+					break;
+				}
+				it1++;
+			}
+			
+			
+			
+			
+			
+		}
+		else if(actionOrGoto[0]=='s')
+		{
+			cout<<"shift ";
+			string temp ="";
+			temp=temp+input[cur];
+			s.push(temp);
+			int state=0;
+			for(i=1;i<actionOrGoto.length();i++)
+			{
+				state =state*10+(actionOrGoto[i]-'0');
+			}
+			cout<<state<<"\n";
+			s.push(to_string(state));
+			cur++;
+			
+		}
+		else
+		{
+			if(actionOrGoto=="AC")
+			{
+				cout<<"Accept\n";
+				break;
+			}
+		}
+		
+		
+	}
+	
+
+	
 }
