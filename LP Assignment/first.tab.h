@@ -200,20 +200,22 @@ typedef
 #define	TR	264
 #define	FL	265
 #define	IF	266
-#define	ELSE	267
-#define	PLEQ	268
-#define	SBEQ	269
-#define	MLEQ	270
-#define	DVEQ	271
-#define	GREQ	272
-#define	LSEQ	273
-#define	GRTH	274
-#define	LSTH	275
-#define	EQEQ	276
-#define	NOTEQ	277
-#define	LOR	278
-#define	LNOT	279
-#define	LAND	280
+#define	WHILE	267
+#define	IFX	268
+#define	ELSE	269
+#define	PLEQ	270
+#define	SBEQ	271
+#define	MLEQ	272
+#define	DVEQ	273
+#define	GREQ	274
+#define	LSEQ	275
+#define	GRTH	276
+#define	LSTH	277
+#define	EQEQ	278
+#define	NOTEQ	279
+#define	LOR	280
+#define	LNOT	281
+#define	LAND	282
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -271,6 +273,8 @@ static const int BOOL;
 static const int TR;
 static const int FL;
 static const int IF;
+static const int WHILE;
+static const int IFX;
 static const int ELSE;
 static const int PLEQ;
 static const int SBEQ;
@@ -302,20 +306,22 @@ static const int LAND;
 	,TR=264
 	,FL=265
 	,IF=266
-	,ELSE=267
-	,PLEQ=268
-	,SBEQ=269
-	,MLEQ=270
-	,DVEQ=271
-	,GREQ=272
-	,LSEQ=273
-	,GRTH=274
-	,LSTH=275
-	,EQEQ=276
-	,NOTEQ=277
-	,LOR=278
-	,LNOT=279
-	,LAND=280
+	,WHILE=267
+	,IFX=268
+	,ELSE=269
+	,PLEQ=270
+	,SBEQ=271
+	,MLEQ=272
+	,DVEQ=273
+	,GREQ=274
+	,LSEQ=275
+	,GRTH=276
+	,LSTH=277
+	,EQEQ=278
+	,NOTEQ=279
+	,LOR=280
+	,LNOT=281
+	,LAND=282
 
 
 #line 215 "/usr/share/bison++/bison.h"

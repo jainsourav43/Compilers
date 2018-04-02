@@ -10,6 +10,8 @@ using namespace std;
 
 "if" 				 {return IF;}
 
+"while" 				 {return WHILE;}
+
 "else"				 {return ELSE;}
 
 "{"					 {return yytext[0];}
@@ -62,7 +64,7 @@ using namespace std;
 "!=" 				 {/*cout<<"Returning != \n";*/ return NOTEQ;}
 
  
-[\n]				 {/*cout<<"Returning EOL\n";*/ return EOL;}
+[\n]				 {/*cout<<"Returning EOL\n";*/}
 
 
               

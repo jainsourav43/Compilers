@@ -25,7 +25,7 @@ bool checkTypeCompatibility(string s1,string s2)
 	}
 	return true;
 }
-void yyerror(const char *str)
+void yyerror(char *str)
 {
 	cout<<"\nError : \n"<<str<<endl;
 }
@@ -69,14 +69,14 @@ char* str;
 %token<str> NUM ID
 %token EOL
 %token INT UINT BOOL 
-%token<str> TR FL 
-%token IF WHILE
+%token<str> TR FL
+%token IF 
 %nonassoc IFX
 %nonassoc ELSE 
 %type<number> exp
 %type<number> assignment_stmt 
 %type<number> declare_stmt
-%type<number> program statements if_stmt while_stmt
+%type<number> program statements
 %token PLEQ SBEQ MLEQ DVEQ
 %left GREQ  
 %left LSEQ
@@ -99,87 +99,31 @@ char* str;
 
 
 %%
-
-program:					{
-								$$=getFreeIndex();		
-							}
- |program statements        {
- 								$$=getFreeIndex();
- 								table[$$].code=table[$2].code;
- 								mainTableIndex = $$;
+program:					{}
+ |program statements  EOL       {
+ 								mainTableIndex = $2;
  								cout<<table[mainTableIndex].code<<endl;
  							}
  ;
-statements:					
-
-declare_stmt 				{
-								$$ = $1;
+statements:					{
+								$$ =getFreeIndex();
 							}
 
-|assignment_stmt 			{$$ = $1;
-							}
-							
-|if_stmt					{$$ = $1;
-                            }
-                            
-|while_stmt					{$$ = $1;
-                            }
 
-|'{' program '}'			{
-								$$=$2;
-								mainTableIndex=$$;							
+|declare_stmt statements	{
+								$$ =getFreeIndex();
+								table[$$].code =table[$1].code+"\n"+table[$2].code+"\n";
+							}
+
+|assignment_stmt statements {
+								$$ =getFreeIndex();
+								table[$$].code =table[$1].code+"\n"+table[$2].code+"\n";
 							}
 							
 ;
 
 
-if_stmt: IF '(' exp ')'  statements %prec IFX {
-  									if(symbolTable[table[$3].place]!="BOOL")
-									{
-										cout<<"Not bool type"<<endl;
-										exit(0);
-									}
-									$$=getFreeIndex();
-									table[$$].after=getLabel();
-									string gen="";
-									gen="if "+table[$3].place+"=="+'0'+" goto "+table[$$].after+'\n';
-									table[$$].code=table[$3].code+gen+table[$5].code+'\n'+table[$$].after;
-									mainTableIndex==$$;		
-  								 }
-  | IF '(' exp ')' statements ELSE statements {
-  									if(symbolTable[table[$3].place]!="BOOL")
-									{
-										cout<<"Not bool type"<<endl;
-										exit(0);
-									}
-									$$=getFreeIndex();
-									table[$$].after=getLabel();
-									string gen="";
-									gen="if "+table[$3].place+"=="+'0'+" goto "+table[$$].after+'\n';
-									table[$$].code=table[$3].code+gen+table[$5].code+'\n'+table[$$].after;
-									mainTableIndex==$$;
-  								}
-;
 
-
-while_stmt:
-WHILE '(' exp ')' statements {
-									if(symbolTable[table[$3].place]!="BOOL")
-									{
-										cout<<"Not bool type"<<endl;
-										exit(0);
-									}
-									$$=getFreeIndex();
-									table[$$].begin=getLabel();
-									table[$$].after=getLabel();
-									string gen="";
-									
-									gen=table[$$].begin+":\n"+"if "+table[$3].place+"=="+'0'+" goto "+table[$$].after+'\n';
-									table[$$].code=table[$3].code+gen+table[$5].code+'\n'+"goto " +table[$$].begin+"\n"+table[$$].after+":";
-									mainTableIndex==$$;
-
-							}
-;
 declare_stmt:
 INT ID ';'          {
 							if(symbolTable.find(string($2))!=symbolTable.end())
