@@ -58,6 +58,8 @@ int getFreeIndex()
 	return firstIndex++;
 }
 int mainTableIndex=-1;
+int lastTableIndex=-1;
+int nested=0;
 
 %}
 
@@ -105,9 +107,12 @@ program:					{
 							}
  |program statements        {
  								$$=getFreeIndex();
+ 								if(lastTableIndex!=-1)
+ 								table[$$].code=table[lastTableIndex].code+table[$2].code;
+ 								else
  								table[$$].code=table[$2].code;
  								mainTableIndex = $$;
- 								cout<<table[mainTableIndex].code<<endl;
+ 								lastTableIndex=$$;
  							}
  ;
 statements:					
@@ -189,7 +194,7 @@ INT ID ';'          {
 							}
 							symbolTable[string($2)] = "INT";
 							$$ =getFreeIndex();
-							table[$$].code ="Declaring "+string($2);
+							table[$$].code ="Declaring "+string($2)+"\n";
 							mainTableIndex=$$;
      		            }
      		           
@@ -215,7 +220,7 @@ INT ID ';'          {
 							}
 	 						symbolTable[string($2)] = "UINT";
 	 						$$ =getFreeIndex();
-							table[$$].code ="Declaring "+string($2);
+							table[$$].code ="Declaring "+string($2)+"\n";
 							mainTableIndex=$$;
      		            }
      		           
@@ -240,7 +245,7 @@ INT ID ';'          {
 							}
 	 						symbolTable[string($2)] = "BOOL";
 	 						$$ =getFreeIndex();
-							table[$$].code ="Declaring "+string($2);
+							table[$$].code ="Declaring "+string($2)+"\n";
 							mainTableIndex=$$;
    						}
    						
@@ -255,7 +260,7 @@ INT ID ';'          {
 							string mycode  = "Declared and Initialised  "+string($2)+ '=' + "true" + '\n';
 							table[$$].code =mycode;
 							mainTableIndex=$$;
-   						   }
+   						   }Untitled Document
    						   
    	|BOOL ID '=' FL ';' {
                             if(symbolTable.find(string($2))!=symbolTable.end())
@@ -303,7 +308,6 @@ assignment_stmt:
 					symbolTable[table[$$].place] ="INT";
 					table[$$].code = table[$3].code +table[$$].place + '=' +string($1)+ '+' + table[$3].place+"\n" + string($1) + '=' + table[$$].place;
 					mainTableIndex=$$;
-					//cout<<table[mainTableIndex].code<<endl;
 			      }
 			      
 	| ID SBEQ exp ';'{
@@ -331,7 +335,6 @@ assignment_stmt:
 					symbolTable[table[$$].place] ="INT";
 					table[$$].code = table[$3].code +table[$$].place + '=' +string($1)+ '*' + table[$3].place+"\n" + string($1) + '=' + table[$$].place;
 					mainTableIndex=$$;
-					//cout<<table[mainTableIndex].code<<endl;
 			      }
 			      
 			      
@@ -726,6 +729,7 @@ int main()
 {
 	yyparse();
 	cout<<"\n\nGenerated 3-address code : \n\n";
+	cout<<table[lastTableIndex].code<<endl;
 
 	return 0;
 }
