@@ -10,8 +10,6 @@ struct tableStructure
 	string begin;
 	string after;
 }table[10000];
-
-
 bool checkTypeCompatibility(string s1,string s2)
 {
 	if(s1=="BOOL"&&(s2=="UINT"||s2=="INT"))
@@ -31,24 +29,19 @@ void yyerror(const char *str)
 }
 int yylex();
 int firstIndex=0;
-
 string newtemp()
 {
 	string temp="t"+to_string(tempCounter);
 	tempCounter++;
 	return temp;
 }
-
 map<string,string >symbolTable;
-
 string getLabel()
 {
 	string temp="L"+to_string(labelCounter);
 	labelCounter++;
 	return temp;
 }
-
-
 int getFreeIndex()
 {
 	table[firstIndex].place="";
@@ -60,9 +53,7 @@ int getFreeIndex()
 int mainTableIndex=-1;
 int lastTableIndex=-1;
 int nested=0;
-
 %}
-
 %union
 {
 int number;
@@ -97,11 +88,7 @@ char* str;
 %left '+' '-'
 %left '*' '/'
 %left '%'
-
-
-
 %%
-
 program:					{
 								$$=getFreeIndex();		
 							}
@@ -116,11 +103,9 @@ program:					{
  							}
  ;
 statements:					
-
 declare_stmt 				{
 								$$ = $1;
 							}
-
 |assignment_stmt 			{$$ = $1;
 							}
 							
@@ -129,15 +114,12 @@ declare_stmt 				{
                             
 |while_stmt					{$$ = $1;
                             }
-
 |'{' program '}'			{
 								$$=$2;
 								mainTableIndex=$$;							
 							}
 							
 ;
-
-
 if_stmt: IF '(' exp ')'  statements %prec IFX {
   									if(symbolTable[table[$3].place]!="BOOL")
 									{
@@ -165,8 +147,6 @@ if_stmt: IF '(' exp ')'  statements %prec IFX {
 									mainTableIndex==$$;
   								}
 ;
-
-
 while_stmt:
 WHILE '(' exp ')' statements {
 									if(symbolTable[table[$3].place]!="BOOL")
@@ -182,7 +162,6 @@ WHILE '(' exp ')' statements {
 									gen=table[$$].begin+":\n"+"if "+table[$3].place+"=="+'0'+" goto "+table[$$].after+'\n';
 									table[$$].code=table[$3].code+gen+table[$5].code+'\n'+"goto " +table[$$].begin+"\n"+table[$$].after+":";
 									mainTableIndex==$$;
-
 							}
 ;
 declare_stmt:
@@ -260,7 +239,7 @@ INT ID ';'          {
 							string mycode  = "Declared and Initialised  "+string($2)+ '=' + "true" + '\n';
 							table[$$].code =mycode;
 							mainTableIndex=$$;
-   						   }Untitled Document
+   						   }
    						   
    	|BOOL ID '=' FL ';' {
                             if(symbolTable.find(string($2))!=symbolTable.end())
@@ -279,7 +258,6 @@ INT ID ';'          {
    	 
 ;       
 assignment_stmt:
-
 	ID '=' exp ';' {
 					if(symbolTable.find(string($1))==symbolTable.end())
 					{
@@ -321,7 +299,6 @@ assignment_stmt:
 					symbolTable[table[$$].place] ="INT";
 					table[$$].code = table[$3].code +table[$$].place + '=' +string($1)+ '-' + table[$3].place+"\n" + string($1) + '=' + table[$$].place;
 					mainTableIndex=$$;
-
 			      }
 			      
 	| ID MLEQ exp ';'{
@@ -353,10 +330,7 @@ assignment_stmt:
 			      
 			      
 	
-
 ;
-
-
 exp:  
 	exp '|' exp {
 					$$ =getFreeIndex();
@@ -719,17 +693,11 @@ exp:
 	
 	;
  
-
-
 %%
-
-
-
 int main()
 {
 	yyparse();
 	cout<<"\n\nGenerated 3-address code : \n\n";
 	cout<<table[lastTableIndex].code<<endl;
-
 	return 0;
-}
+	}

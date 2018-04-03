@@ -75,8 +75,6 @@ struct tableStructure
 	string begin;
 	string after;
 }table[10000];
-
-
 bool checkTypeCompatibility(string s1,string s2)
 {
 	if(s1=="BOOL"&&(s2=="UINT"||s2=="INT"))
@@ -96,24 +94,19 @@ void yyerror(const char *str)
 }
 int yylex();
 int firstIndex=0;
-
 string newtemp()
 {
 	string temp="t"+to_string(tempCounter);
 	tempCounter++;
 	return temp;
 }
-
 map<string,string >symbolTable;
-
 string getLabel()
 {
 	string temp="L"+to_string(labelCounter);
 	labelCounter++;
 	return temp;
 }
-
-
 int getFreeIndex()
 {
 	table[firstIndex].place="";
@@ -124,9 +117,9 @@ int getFreeIndex()
 }
 int mainTableIndex=-1;
 int lastTableIndex=-1;
+int nested=0;
 
-
-#line 130 "first.tab.c" /* yacc.c:339  */
+#line 123 "first.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -194,12 +187,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 66 "first.y" /* yacc.c:355  */
+#line 58 "first.y" /* yacc.c:355  */
 
 int number;
 char* str;
 
-#line 203 "first.tab.c" /* yacc.c:355  */
+#line 196 "first.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -216,7 +209,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 220 "first.tab.c" /* yacc.c:358  */
+#line 213 "first.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -516,11 +509,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   104,   104,   107,   119,   123,   126,   129,   132,   140,
-     153,   170,   188,   200,   214,   226,   239,   251,   264,   282,
-     299,   313,   327,   342,   362,   383,   404,   425,   446,   467,
-     490,   512,   534,   555,   569,   582,   594,   607,   620,   633,
-     645,   659,   674,   683,   696,   704,   712
+       0,    92,    92,    95,   106,   109,   112,   115,   117,   123,
+     136,   151,   168,   180,   194,   206,   219,   231,   244,   261,
+     278,   291,   304,   318,   335,   356,   377,   398,   419,   440,
+     463,   485,   507,   528,   542,   555,   567,   580,   593,   606,
+     618,   632,   647,   656,   669,   677,   685
 };
 #endif
 
@@ -1423,15 +1416,15 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 104 "first.y" /* yacc.c:1646  */
+#line 92 "first.y" /* yacc.c:1646  */
     {
 								(yyval.number)=getFreeIndex();		
 							}
-#line 1431 "first.tab.c" /* yacc.c:1646  */
+#line 1424 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 107 "first.y" /* yacc.c:1646  */
+#line 95 "first.y" /* yacc.c:1646  */
     {
  								(yyval.number)=getFreeIndex();
  								if(lastTableIndex!=-1)
@@ -1441,49 +1434,49 @@ yyreduce:
  								mainTableIndex = (yyval.number);
  								lastTableIndex=(yyval.number);
  							}
-#line 1445 "first.tab.c" /* yacc.c:1646  */
+#line 1438 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 119 "first.y" /* yacc.c:1646  */
+#line 106 "first.y" /* yacc.c:1646  */
     {
 								(yyval.number) = (yyvsp[0].number);
+							}
+#line 1446 "first.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 109 "first.y" /* yacc.c:1646  */
+    {(yyval.number) = (yyvsp[0].number);
 							}
 #line 1453 "first.tab.c" /* yacc.c:1646  */
     break;
 
-  case 5:
-#line 123 "first.y" /* yacc.c:1646  */
+  case 6:
+#line 112 "first.y" /* yacc.c:1646  */
     {(yyval.number) = (yyvsp[0].number);
-							}
+                            }
 #line 1460 "first.tab.c" /* yacc.c:1646  */
     break;
 
-  case 6:
-#line 126 "first.y" /* yacc.c:1646  */
+  case 7:
+#line 115 "first.y" /* yacc.c:1646  */
     {(yyval.number) = (yyvsp[0].number);
                             }
 #line 1467 "first.tab.c" /* yacc.c:1646  */
     break;
 
-  case 7:
-#line 129 "first.y" /* yacc.c:1646  */
-    {(yyval.number) = (yyvsp[0].number);
-                            }
-#line 1474 "first.tab.c" /* yacc.c:1646  */
-    break;
-
   case 8:
-#line 132 "first.y" /* yacc.c:1646  */
+#line 117 "first.y" /* yacc.c:1646  */
     {
 								(yyval.number)=(yyvsp[-1].number);
 								mainTableIndex=(yyval.number);							
 							}
-#line 1483 "first.tab.c" /* yacc.c:1646  */
+#line 1476 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 140 "first.y" /* yacc.c:1646  */
+#line 123 "first.y" /* yacc.c:1646  */
     {
   									if(symbolTable[table[(yyvsp[-2].number)].place]!="BOOL")
 									{
@@ -1497,11 +1490,11 @@ yyreduce:
 									table[(yyval.number)].code=table[(yyvsp[-2].number)].code+gen+table[(yyvsp[0].number)].code+'\n'+table[(yyval.number)].after;
 									mainTableIndex==(yyval.number);		
   								 }
-#line 1501 "first.tab.c" /* yacc.c:1646  */
+#line 1494 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 153 "first.y" /* yacc.c:1646  */
+#line 136 "first.y" /* yacc.c:1646  */
     {
   									if(symbolTable[table[(yyvsp[-4].number)].place]!="BOOL")
 									{
@@ -1515,11 +1508,11 @@ yyreduce:
 									table[(yyval.number)].code=table[(yyvsp[-4].number)].code+gen+table[(yyvsp[-2].number)].code+'\n'+table[(yyval.number)].after;
 									mainTableIndex==(yyval.number);
   								}
-#line 1519 "first.tab.c" /* yacc.c:1646  */
+#line 1512 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 170 "first.y" /* yacc.c:1646  */
+#line 151 "first.y" /* yacc.c:1646  */
     {
 									if(symbolTable[table[(yyvsp[-2].number)].place]!="BOOL")
 									{
@@ -1534,13 +1527,12 @@ yyreduce:
 									gen=table[(yyval.number)].begin+":\n"+"if "+table[(yyvsp[-2].number)].place+"=="+'0'+" goto "+table[(yyval.number)].after+'\n';
 									table[(yyval.number)].code=table[(yyvsp[-2].number)].code+gen+table[(yyvsp[0].number)].code+'\n'+"goto " +table[(yyval.number)].begin+"\n"+table[(yyval.number)].after+":";
 									mainTableIndex==(yyval.number);
-
 							}
-#line 1540 "first.tab.c" /* yacc.c:1646  */
+#line 1532 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 188 "first.y" /* yacc.c:1646  */
+#line 168 "first.y" /* yacc.c:1646  */
     {
 							if(symbolTable.find(string((yyvsp[-1].str)))!=symbolTable.end())
 							{
@@ -1552,11 +1544,11 @@ yyreduce:
 							table[(yyval.number)].code ="Declaring "+string((yyvsp[-1].str))+"\n";
 							mainTableIndex=(yyval.number);
      		            }
-#line 1556 "first.tab.c" /* yacc.c:1646  */
+#line 1548 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 200 "first.y" /* yacc.c:1646  */
+#line 180 "first.y" /* yacc.c:1646  */
     {
     
     						if(symbolTable.find(string((yyvsp[-3].str)))!=symbolTable.end())
@@ -1570,11 +1562,11 @@ yyreduce:
 							table[(yyval.number)].code=table[(yyvsp[-1].number)].code+"\n"+mycode;
 							mainTableIndex=(yyval.number);
     				    }
-#line 1574 "first.tab.c" /* yacc.c:1646  */
+#line 1566 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 214 "first.y" /* yacc.c:1646  */
+#line 194 "first.y" /* yacc.c:1646  */
     {
     						if(symbolTable.find(string((yyvsp[-1].str)))!=symbolTable.end())
 							{
@@ -1586,11 +1578,11 @@ yyreduce:
 							table[(yyval.number)].code ="Declaring "+string((yyvsp[-1].str))+"\n";
 							mainTableIndex=(yyval.number);
      		            }
-#line 1590 "first.tab.c" /* yacc.c:1646  */
+#line 1582 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 226 "first.y" /* yacc.c:1646  */
+#line 206 "first.y" /* yacc.c:1646  */
     {
     						if(symbolTable.find(string((yyvsp[-3].str)))!=symbolTable.end())
 							{
@@ -1603,11 +1595,11 @@ yyreduce:
 							table[(yyval.number)].code=table[(yyvsp[-1].number)].code+"\n"+mycode;
 							mainTableIndex=(yyval.number);
     				    }
-#line 1607 "first.tab.c" /* yacc.c:1646  */
+#line 1599 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 239 "first.y" /* yacc.c:1646  */
+#line 219 "first.y" /* yacc.c:1646  */
     {
                             if(symbolTable.find(string((yyvsp[-1].str)))!=symbolTable.end())
 							{
@@ -1619,11 +1611,11 @@ yyreduce:
 							table[(yyval.number)].code ="Declaring "+string((yyvsp[-1].str))+"\n";
 							mainTableIndex=(yyval.number);
    						}
-#line 1623 "first.tab.c" /* yacc.c:1646  */
+#line 1615 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 251 "first.y" /* yacc.c:1646  */
+#line 231 "first.y" /* yacc.c:1646  */
     {
                             if(symbolTable.find(string((yyvsp[-3].str)))!=symbolTable.end())
 							{
@@ -1636,11 +1628,11 @@ yyreduce:
 							table[(yyval.number)].code =mycode;
 							mainTableIndex=(yyval.number);
    						   }
-#line 1640 "first.tab.c" /* yacc.c:1646  */
+#line 1632 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 264 "first.y" /* yacc.c:1646  */
+#line 244 "first.y" /* yacc.c:1646  */
     {
                             if(symbolTable.find(string((yyvsp[-3].str)))!=symbolTable.end())
 							{
@@ -1653,11 +1645,11 @@ yyreduce:
 							table[(yyval.number)].code =mycode;
 							mainTableIndex=(yyval.number);
    						   }
-#line 1657 "first.tab.c" /* yacc.c:1646  */
+#line 1649 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 282 "first.y" /* yacc.c:1646  */
+#line 261 "first.y" /* yacc.c:1646  */
     {
 					if(symbolTable.find(string((yyvsp[-3].str)))==symbolTable.end())
 					{
@@ -1674,11 +1666,11 @@ yyreduce:
 					table[(yyval.number)].code=table[(yyvsp[-1].number)].code+mycode;
 					mainTableIndex=(yyval.number);
 					}
-#line 1678 "first.tab.c" /* yacc.c:1646  */
+#line 1670 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 299 "first.y" /* yacc.c:1646  */
+#line 278 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1690,13 +1682,12 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="INT";
 					table[(yyval.number)].code = table[(yyvsp[-1].number)].code +table[(yyval.number)].place + '=' +string((yyvsp[-3].str))+ '+' + table[(yyvsp[-1].number)].place+"\n" + string((yyvsp[-3].str)) + '=' + table[(yyval.number)].place;
 					mainTableIndex=(yyval.number);
-					//cout<<table[mainTableIndex].code<<endl;
 			      }
-#line 1696 "first.tab.c" /* yacc.c:1646  */
+#line 1687 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 313 "first.y" /* yacc.c:1646  */
+#line 291 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1708,13 +1699,12 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="INT";
 					table[(yyval.number)].code = table[(yyvsp[-1].number)].code +table[(yyval.number)].place + '=' +string((yyvsp[-3].str))+ '-' + table[(yyvsp[-1].number)].place+"\n" + string((yyvsp[-3].str)) + '=' + table[(yyval.number)].place;
 					mainTableIndex=(yyval.number);
-
 			      }
-#line 1714 "first.tab.c" /* yacc.c:1646  */
+#line 1704 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 327 "first.y" /* yacc.c:1646  */
+#line 304 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1726,13 +1716,12 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="INT";
 					table[(yyval.number)].code = table[(yyvsp[-1].number)].code +table[(yyval.number)].place + '=' +string((yyvsp[-3].str))+ '*' + table[(yyvsp[-1].number)].place+"\n" + string((yyvsp[-3].str)) + '=' + table[(yyval.number)].place;
 					mainTableIndex=(yyval.number);
-					//cout<<table[mainTableIndex].code<<endl;
 			      }
-#line 1732 "first.tab.c" /* yacc.c:1646  */
+#line 1721 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 342 "first.y" /* yacc.c:1646  */
+#line 318 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1745,11 +1734,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-1].number)].code +table[(yyval.number)].place + '=' +string((yyvsp[-3].str))+ '/' + table[(yyvsp[-1].number)].place+"\n" + string((yyvsp[-3].str)) + '=' + table[(yyval.number)].place;
 					mainTableIndex=(yyval.number);
 			      }
-#line 1749 "first.tab.c" /* yacc.c:1646  */
+#line 1738 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 362 "first.y" /* yacc.c:1646  */
+#line 335 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1770,11 +1759,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-2].number)].code+table[(yyvsp[0].number)].code +table[(yyval.number)].place + '=' +table[(yyvsp[-2].number)].place + '|' + table[(yyvsp[0].number)].place+"\n";
 					mainTableIndex=(yyval.number);
 			     }
-#line 1774 "first.tab.c" /* yacc.c:1646  */
+#line 1763 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 383 "first.y" /* yacc.c:1646  */
+#line 356 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1795,11 +1784,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-2].number)].code+table[(yyvsp[0].number)].code +table[(yyval.number)].place + '=' +table[(yyvsp[-2].number)].place + '&' + table[(yyvsp[0].number)].place+"\n";
 					mainTableIndex=(yyval.number);
 			      }
-#line 1799 "first.tab.c" /* yacc.c:1646  */
+#line 1788 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 404 "first.y" /* yacc.c:1646  */
+#line 377 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1820,11 +1809,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-2].number)].code+table[(yyvsp[0].number)].code +table[(yyval.number)].place + '=' +table[(yyvsp[-2].number)].place + '^' + table[(yyvsp[0].number)].place+"\n";
 					mainTableIndex=(yyval.number);
 				  }
-#line 1824 "first.tab.c" /* yacc.c:1646  */
+#line 1813 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 425 "first.y" /* yacc.c:1646  */
+#line 398 "first.y" /* yacc.c:1646  */
     {
 	  				(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1845,11 +1834,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[0].number)].code+table[(yyval.number)].place + '=' + mygen;
 					mainTableIndex=(yyval.number);
 				  }
-#line 1849 "first.tab.c" /* yacc.c:1646  */
+#line 1838 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 446 "first.y" /* yacc.c:1646  */
+#line 419 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1870,11 +1859,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-2].number)].code+table[(yyvsp[0].number)].code +table[(yyval.number)].place + '=' +table[(yyvsp[-2].number)].place + '+' + table[(yyvsp[0].number)].place+"\n";
 					mainTableIndex=(yyval.number);
 			      }
-#line 1874 "first.tab.c" /* yacc.c:1646  */
+#line 1863 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 467 "first.y" /* yacc.c:1646  */
+#line 440 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1895,11 +1884,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-2].number)].code+table[(yyvsp[0].number)].code +table[(yyval.number)].place + '=' +table[(yyvsp[-2].number)].place + '-' + table[(yyvsp[0].number)].place+"\n";
 					mainTableIndex=(yyval.number);
 			      }
-#line 1899 "first.tab.c" /* yacc.c:1646  */
+#line 1888 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 490 "first.y" /* yacc.c:1646  */
+#line 463 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1920,11 +1909,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-2].number)].code+table[(yyvsp[0].number)].code +table[(yyval.number)].place + '=' +table[(yyvsp[-2].number)].place + '*' + table[(yyvsp[0].number)].place+"\n";
 					mainTableIndex=(yyval.number);
 			      }
-#line 1924 "first.tab.c" /* yacc.c:1646  */
+#line 1913 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 512 "first.y" /* yacc.c:1646  */
+#line 485 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1945,11 +1934,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-2].number)].code+table[(yyvsp[0].number)].code +table[(yyval.number)].place + '=' +table[(yyvsp[-2].number)].place + '/' + table[(yyvsp[0].number)].place+"\n";
 					mainTableIndex=(yyval.number);
 			      }
-#line 1949 "first.tab.c" /* yacc.c:1646  */
+#line 1938 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 534 "first.y" /* yacc.c:1646  */
+#line 507 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -1970,11 +1959,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyvsp[-2].number)].code+table[(yyvsp[0].number)].code +table[(yyval.number)].place + '=' +table[(yyvsp[-2].number)].place + '%' + table[(yyvsp[0].number)].place+"\n";
 					mainTableIndex=(yyval.number);
 			      }
-#line 1974 "first.tab.c" /* yacc.c:1646  */
+#line 1963 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 555 "first.y" /* yacc.c:1646  */
+#line 528 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp(); 
@@ -1988,11 +1977,11 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 1992 "first.tab.c" /* yacc.c:1646  */
+#line 1981 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 569 "first.y" /* yacc.c:1646  */
+#line 542 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -2005,11 +1994,11 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 2009 "first.tab.c" /* yacc.c:1646  */
+#line 1998 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 582 "first.y" /* yacc.c:1646  */
+#line 555 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -2022,11 +2011,11 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 2026 "first.tab.c" /* yacc.c:1646  */
+#line 2015 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 594 "first.y" /* yacc.c:1646  */
+#line 567 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -2039,11 +2028,11 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 2043 "first.tab.c" /* yacc.c:1646  */
+#line 2032 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 607 "first.y" /* yacc.c:1646  */
+#line 580 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -2056,11 +2045,11 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 2060 "first.tab.c" /* yacc.c:1646  */
+#line 2049 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 620 "first.y" /* yacc.c:1646  */
+#line 593 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -2073,11 +2062,11 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 2077 "first.tab.c" /* yacc.c:1646  */
+#line 2066 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 633 "first.y" /* yacc.c:1646  */
+#line 606 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -2090,11 +2079,11 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 2094 "first.tab.c" /* yacc.c:1646  */
+#line 2083 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 645 "first.y" /* yacc.c:1646  */
+#line 618 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -2107,11 +2096,11 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 2111 "first.tab.c" /* yacc.c:1646  */
+#line 2100 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 659 "first.y" /* yacc.c:1646  */
+#line 632 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) =getFreeIndex();
 					table[(yyval.number)].place =newtemp();
@@ -2124,21 +2113,21 @@ yyreduce:
 					symbolTable[table[(yyval.number)].place] ="BOOL";
 					mainTableIndex=(yyval.number);
 			      }
-#line 2128 "first.tab.c" /* yacc.c:1646  */
+#line 2117 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 674 "first.y" /* yacc.c:1646  */
+#line 647 "first.y" /* yacc.c:1646  */
     {
 					(yyval.number) = getFreeIndex();
 					table[(yyval.number)] = table[(yyvsp[-1].number)];
 					mainTableIndex = (yyval.number);
 				  }
-#line 2138 "first.tab.c" /* yacc.c:1646  */
+#line 2127 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 683 "first.y" /* yacc.c:1646  */
+#line 656 "first.y" /* yacc.c:1646  */
     {
 	                if(symbolTable.find(string((yyvsp[0].str)))==symbolTable.end())
 					{
@@ -2149,11 +2138,11 @@ yyreduce:
 					table[(yyval.number)].place =string((yyvsp[0].str));
 					mainTableIndex=(yyval.number);
 				  }
-#line 2153 "first.tab.c" /* yacc.c:1646  */
+#line 2142 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 696 "first.y" /* yacc.c:1646  */
+#line 669 "first.y" /* yacc.c:1646  */
     {
 	    			(yyval.number) = getFreeIndex();
 					table[(yyval.number)].place = newtemp();
@@ -2161,11 +2150,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyval.number)].place + " = " + "true" + "\n";
 					mainTableIndex = (yyval.number);
 				  }
-#line 2165 "first.tab.c" /* yacc.c:1646  */
+#line 2154 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 704 "first.y" /* yacc.c:1646  */
+#line 677 "first.y" /* yacc.c:1646  */
     {
 	    			(yyval.number) = getFreeIndex();
 					table[(yyval.number)].place = newtemp();
@@ -2173,11 +2162,11 @@ yyreduce:
 					table[(yyval.number)].code = table[(yyval.number)].place + " = " + "false" + "\n";
 					mainTableIndex = (yyval.number);
 				  }
-#line 2177 "first.tab.c" /* yacc.c:1646  */
+#line 2166 "first.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 712 "first.y" /* yacc.c:1646  */
+#line 685 "first.y" /* yacc.c:1646  */
     {
 	
 						(yyval.number) = getFreeIndex();
@@ -2186,11 +2175,11 @@ yyreduce:
 						table[(yyval.number)].code = table[(yyval.number)].place + " = " + string((yyvsp[0].str)) + "\n";
 						mainTableIndex = (yyval.number);
 				  }
-#line 2190 "first.tab.c" /* yacc.c:1646  */
+#line 2179 "first.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2194 "first.tab.c" /* yacc.c:1646  */
+#line 2183 "first.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2418,16 +2407,12 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 725 "first.y" /* yacc.c:1906  */
-
-
-
+#line 696 "first.y" /* yacc.c:1906  */
 
 int main()
 {
 	yyparse();
 	cout<<"\n\nGenerated 3-address code : \n\n";
 	cout<<table[lastTableIndex].code<<endl;
-
 	return 0;
-}
+	}
