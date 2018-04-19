@@ -1,0 +1,94 @@
+int a; int b; int c;
+switch(a)
+{
+	case 1:
+	{
+		switch(b)
+		{
+			case 2:
+			{
+				a=10;
+				b=a;
+				b=a+b;
+			}
+			break;
+			case 3:
+			{
+				b=10;
+				c=a;
+				c=a*10;
+			}
+			break;
+			default:
+			int x=10;
+		}
+	}
+	break;
+	
+	case 4:
+	{
+		int d=a;
+		d=a+10;
+		b=d+c;
+	}
+	break;
+	
+	default:
+	{
+	int y=a+10;
+	y++;
+	}
+	
+}
+
+
+bool a1; bool a2; bool b1; bool b2;
+
+
+while(a1)
+{
+	if(a<b)
+	{
+		if(a<c)
+		{
+			a-=10;
+		}
+		else
+		{
+			a+=10;
+		}
+		
+	}
+	else
+	{
+		if(b<c)
+		{
+			b-=10;
+		}
+		else
+		{
+			b+=10;
+		}
+	}
+	
+	
+	while(b1&&b2)
+	{
+		b=b+100;
+		a=a-100;
+	}
+}
+
+
+if(a<b)
+{
+	while(a>0)
+	{
+		a=a-10;
+	}
+}
+
+
+
+
+
